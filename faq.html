@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>자주 묻는 질문 - 비딧(BIDIT)</title>
+  <meta name="description" content="비딧 서비스에 대한 자주 묻는 질문과 답변을 확인하세요.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+  
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Noto Sans KR', sans-serif; color: #333; line-height: 1.6; }
+    a { text-decoration: none; color: inherit; }
+    
+    :root {
+      --primary: #0E2B3A;
+      --primary-light: #2C5368;
+      --accent: #70A4C4;
+      --white: #FFFFFF;
+      --gray-50: #F8FAFC;
+      --gray-100: #F0F7FC;
+      --gray-200: #E5E7EB;
+      --gray-500: #666666;
+    }
+    
+    .header { position: fixed; top: 0; left: 0; right: 0; background: rgba(14, 43, 58, 0.95); backdrop-filter: blur(10px); z-index: 1000; padding: 16px 24px; }
+    .header-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-size: 24px; font-weight: 900; color: var(--white); }
+    .nav { display: flex; align-items: center; gap: 32px; }
+    .nav a { color: rgba(255, 255, 255, 0.8); font-size: 15px; font-weight: 500; transition: color 0.3s ease; }
+    .nav a:hover, .nav a.active { color: var(--white); }
+    .nav-cta { background: var(--accent); color: var(--white) !important; padding: 10px 20px; border-radius: 6px; font-weight: 700; }
+    .mobile-menu-btn { display: none; background: none; border: none; cursor: pointer; }
+    .mobile-menu-btn span { display: block; width: 24px; height: 2px; background: var(--white); margin: 6px 0; }
+    
+    .page-hero { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); padding: 140px 20px 80px; text-align: center; }
+    .page-hero h1 { font-size: 42px; font-weight: 900; color: var(--white); margin-bottom: 16px; }
+    .page-hero p { font-size: 18px; color: rgba(255, 255, 255, 0.8); }
+    
+    .faq-section { background: var(--white); padding: 80px 20px; }
+    .faq-inner { max-width: 800px; margin: 0 auto; }
+    .faq-category { margin-bottom: 56px; }
+    .faq-category-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 16px; border-bottom: 2px solid var(--gray-200); }
+    .faq-category-icon { width: 48px; height: 48px; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; }
+    .faq-category-icon.partner { background: linear-gradient(135deg, var(--accent) 0%, #5B8FAF 100%); }
+    .faq-category-title { font-size: 24px; font-weight: 700; color: var(--primary); }
+    
+    .accordion { border: 1px solid var(--gray-200); border-radius: 12px; margin-bottom: 12px; overflow: hidden; transition: all 0.3s ease; }
+    .accordion:hover { border-color: var(--accent); }
+    .accordion-header { display: flex; justify-content: space-between; align-items: center; padding: 22px 28px; background: var(--white); cursor: pointer; transition: background 0.3s ease; }
+    .accordion-header:hover { background: var(--gray-50); }
+    .accordion-question { font-size: 16px; font-weight: 600; color: var(--primary); display: flex; align-items: center; gap: 14px; }
+    .accordion-question::before { content: 'Q'; width: 32px; height: 32px; background: var(--accent); color: var(--white); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; flex-shrink: 0; }
+    .accordion-icon { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; transition: transform 0.3s ease; color: #999; flex-shrink: 0; }
+    .accordion.active .accordion-icon { transform: rotate(180deg); }
+    .accordion-body { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+    .accordion.active .accordion-body { max-height: 400px; }
+    .accordion-answer { padding: 0 28px 28px 74px; font-size: 15px; color: var(--gray-500); line-height: 1.8; }
+    
+    .contact-section { background: var(--gray-50); padding: 80px 20px; }
+    .contact-inner { max-width: 900px; margin: 0 auto; }
+    .contact-header { text-align: center; margin-bottom: 48px; }
+    .section-title { font-size: 32px; font-weight: 900; color: var(--primary); margin-bottom: 16px; }
+    .section-sub { font-size: 18px; color: var(--gray-500); }
+    .contact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .contact-card { background: var(--white); border-radius: 20px; padding: 44px 32px; text-align: center; box-shadow: 0 4px 16px rgba(14, 43, 58, 0.06); transition: all 0.3s ease; }
+    .contact-card:hover { transform: translateY(-6px); box-shadow: 0 12px 32px rgba(14, 43, 58, 0.12); }
+    .contact-icon { width: 80px; height: 80px; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); border-radius: 24px; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; font-size: 36px; }
+    .contact-card.kakao .contact-icon { background: #FEE500; }
+    .contact-title { font-size: 20px; font-weight: 700; color: var(--primary); margin-bottom: 10px; }
+    .contact-info { font-size: 15px; color: var(--gray-500); margin-bottom: 24px; line-height: 1.7; }
+    .contact-btn { display: inline-block; padding: 14px 28px; border-radius: 8px; font-size: 15px; font-weight: 600; transition: all 0.3s ease; }
+    .contact-btn-default { background: var(--gray-100); color: var(--primary-light); }
+    .contact-btn-default:hover { background: #D8E8F0; }
+    .contact-btn-kakao { background: #FEE500; color: #3C1E1E; }
+    .contact-btn-kakao:hover { background: #F5DC00; }
+    
+    .about-section { background: var(--white); padding: 80px 20px; }
+    .about-inner { max-width: 800px; margin: 0 auto; text-align: center; }
+    .about-logo { font-size: 52px; font-weight: 900; color: var(--primary); margin-bottom: 28px; }
+    .about-vision { font-size: 20px; color: #333; line-height: 1.9; margin-bottom: 44px; word-break: keep-all; }
+    .about-divider { width: 60px; height: 3px; background: linear-gradient(90deg, var(--accent) 0%, var(--primary-light) 100%); margin: 0 auto 44px; border-radius: 2px; }
+    .about-info-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; text-align: left; background: var(--gray-50); border-radius: 20px; padding: 44px; }
+    .about-info-item { display: flex; gap: 14px; }
+    .about-info-label { font-size: 14px; color: #888; min-width: 90px; }
+    .about-info-value { font-size: 15px; color: #333; font-weight: 500; }
+    
+    .cta-section { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); padding: 80px 20px; text-align: center; }
+    .cta-inner { max-width: 600px; margin: 0 auto; }
+    .cta-section h2 { font-size: 28px; font-weight: 900; color: var(--white); margin-bottom: 16px; }
+    .cta-section p { font-size: 16px; color: rgba(255, 255, 255, 0.8); margin-bottom: 32px; }
+    .cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 16px 32px; border-radius: 8px; font-size: 16px; font-weight: 700; transition: all 0.3s ease; }
+    .btn-white { background: var(--white); color: var(--primary); }
+    .btn-white:hover { background: var(--gray-100); transform: translateY(-2px); }
+    .btn-outline { background: transparent; color: var(--white); border: 2px solid rgba(255, 255, 255, 0.5); }
+    .btn-outline:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.8); }
+    
+    .footer { background: var(--primary); padding: 64px 20px 40px; color: rgba(255, 255, 255, 0.7); }
+    .footer-inner { max-width: 1100px; margin: 0 auto; }
+    .footer-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 48px; padding-bottom: 48px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+    .footer-brand .logo { margin-bottom: 16px; }
+    .footer-desc { font-size: 14px; line-height: 1.7; max-width: 300px; }
+    .footer-links { display: flex; gap: 64px; }
+    .footer-col h4 { color: var(--white); font-size: 14px; font-weight: 700; margin-bottom: 20px; }
+    .footer-col a { display: block; color: rgba(255, 255, 255, 0.6); font-size: 14px; margin-bottom: 14px; transition: color 0.3s ease; }
+    .footer-col a:hover { color: var(--accent); }
+    .footer-info { font-size: 13px; line-height: 2; }
+    .footer-bottom { margin-top: 32px; padding-top: 24px; border-top: 1px solid rgba(255, 255, 255, 0.1); text-align: center; font-size: 13px; }
+    
+    @media (max-width: 768px) {
+      .nav { display: none; }
+      .mobile-menu-btn { display: block; }
+      .page-hero { padding: 120px 20px 60px; }
+      .page-hero h1 { font-size: 28px; }
+      .faq-section, .contact-section, .about-section { padding: 60px 20px; }
+      .accordion-header { padding: 18px 20px; }
+      .accordion-question { font-size: 15px; }
+      .accordion-answer { padding: 0 20px 20px 20px; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .about-info-grid { grid-template-columns: 1fr; padding: 28px; }
+      .cta-buttons { flex-direction: column; align-items: center; }
+      .btn { width: 100%; max-width: 280px; justify-content: center; }
+      .footer-top { flex-direction: column; gap: 40px; }
+      .footer-links { flex-direction: column; gap: 32px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">BIDIT</a>
+      <nav class="nav">
+        <a href="index.html">홈</a>
+        <a href="service.html">서비스 안내</a>
+        <a href="faq.html" class="active">FAQ</a>
+        <a href="https://pf.kakao.com/_xxxxx" target="_blank" class="nav-cta">사전 신청</a>
+      </nav>
+      <button class="mobile-menu-btn"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <section class="page-hero">
+    <h1>자주 묻는 질문</h1>
+    <p>궁금한 점을 빠르게 해결하세요</p>
+  </section>
+
+  <section class="faq-section">
+    <div class="faq-inner">
+      <div class="faq-category">
+        <div class="faq-category-header">
+          <div class="faq-category-icon">🏪</div>
+          <h2 class="faq-category-title">사장님 (고객) FAQ</h2>
+        </div>
+        
+        <div class="accordion">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <span class="accordion-question">비딧은 어떤 서비스인가요?</span>
+            <span class="accordion-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg></span>
+          </div>
+          <div class="accordion-body">
+            <p class="accordion-answer">비딧은 소상공인/자영업자 사장님과 청소 파트너를 연결해주는 B2B 청소 매칭 플랫폼입니다. 학원, 병원, 카페, 사무실, 피트니스센터 등 다양한 업장에서 1시간 단위로 청소 서비스를 이용할 수 있어요.</p>
+          </div>
+        </div>
+        
+        <div class="accordion">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <span class="accordion-question">청소 요금은 어떻게 되나요?</span>
+            <span class="accordion-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg></span>
+          </div>
+          <div class="accordion-body">
+            <p class="accordion-answer">기본 1시간 15,000원부터 시작하며, 업장 규모와 청소 항목에 따라 요금이 달라집니다. 앱에서 청소 항목을 선택하면 예상 금액을 자동으로 계산해드려요.</p>
+          </div>
+        </div>
+        
+        <div class="accordion">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <span class="accordion-question">청소 파트너는 어떻게 선정되나요?</span>
+            <span class="accordion-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg></span>
+          </div>
+          <div class="accordion-body">
+            <p class="accordion-answer">모든 파트너는 신원 확인과 기본 교육을 완료한 분들입니다. 요청을 올리시면 주변 파트너에게 알림이 가고, 파트너가 수락하면 매칭이 완료됩니다.</p>
+          </div>
+        </div>
+        
+        <div class="accordion">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <span class="accordion-question">결제는 어떻게 하나요?</span>
+            <span class="accordion-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg></span>
+          </div>
+          <div class="accordion-body">
+            <p class="accordion-answer">현재는 계좌이체 방식으로 결제가 진행됩니다. 매칭 완료 후 안내되는 계좌로 입금해주시면 되고, 입금 확인 후 서비스가 진행됩니다.</p>
+          </div>
+        </div>
+        
+        <div class="accordion">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <span class="accordion-question">청소가 마음에 들지 않으면 어떻게 하나요?</span>
+            <span class="accordion-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg></span>
+          </div>
+          <div class="accordion-body">
+            <p class="accordion-answer">서비스 완료 후 리뷰를 남기실 수 있고, 불만족스러운 부분이 있다면 고객센터로 문의해주세요. 정당한 사유가 확인되면 재청소 또는 부분 환불 등의 조치를 취해드립니다.</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="faq-category">
+        <div class="faq-category-header">
+          <div class="faq-category-icon partner">🧹</div>
+          <h2 class="faq-category-title">청소 파트너 FAQ</h2>
+        </div>
+        
+        <div class="accordion">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <span class="accordion-question">파트너 가입 조건이 어떻게 되나요?</span>
+            <span class="accordion-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg></span>
+          </div>
+          <div class="accordion-body">
+            <p class="accordion-answer">만 18세 이상이면 누구나 가입할 수 있습니다. 신분증을 통한 본인 확인과 간단한 온라인 교육을 완료하시면 파트너 활동을 시작할 수 있어요.</p>
+          </div>
+        </div>
+        
+        <div class="accordion">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <span class="accordion-question">수익은 얼마나 되나요?</span>
+            <span class="accordion-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg></span>
+          </div>
+          <div class="accordion-body">
+            <p class="accordion-answer">청소 건당 서비스 요금의 70~80%를 파트너님께 지급해드립니다. 1시간 기준 약 10,000~12,000원 정도의 수익이 발생해요.</p>
+          </div>
+        </div>
+        
+        <div class="accordion">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <span class="accordion-question">청소 도구는 제가 준비해야 하나요?</span>
+            <span class="accordion-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg></span>
+          </div>
+          <div class="accordion-body">
+            <p class="accordion-answer">기본적인 청소 도구는 업장에 비치되어 있는 경우가 많습니다. 필요시 간단한 도구를 지참하시면 됩니다.</p>
+          </div>
+        </div>
+        
+        <div class="accordion">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <span class="accordion-question">정산은 언제 되나요?</span>
+            <span class="accordion-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg></span>
+          </div>
+          <div class="accordion-body">
+            <p class="accordion-answer">서비스 완료 후 완료 사진을 업로드하시면 정산이 진행됩니다. 주 1회 정산을 기본으로 하며, 등록된 계좌로 입금해드려요.</p>
+          </div>
+        </div>
+        
+        <div class="accordion">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <span class="accordion-question">원하는 시간에만 일할 수 있나요?</span>
+            <span class="accordion-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg></span>
+          </div>
+          <div class="accordion-body">
+            <p class="accordion-answer">네, 완전히 자유롭게 일하실 수 있어요! 앱에서 청소 요청 목록을 확인하고, 원하는 요청만 수락하시면 됩니다.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact-section">
+    <div class="contact-inner">
+      <div class="contact-header">
+        <h2 class="section-title">문의하기</h2>
+        <p class="section-sub">궁금한 점이 있으시면 편하게 연락주세요</p>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-card kakao">
+          <div class="contact-icon">💬</div>
+          <h3 class="contact-title">카카오톡</h3>
+          <p class="contact-info">가장 빠른 상담<br>평일 09:00 - 18:00</p>
+          <a href="https://pf.kakao.com/_xxxxx" class="contact-btn contact-btn-kakao" target="_blank">채팅 상담하기</a>
+        </div>
+        <div class="contact-card">
+          <div class="contact-icon">📧</div>
+          <h3 class="contact-title">이메일</h3>
+          <p class="contact-info">pis3124@naver.com<br>24시간 접수</p>
+          <a href="mailto:pis3124@naver.com" class="contact-btn contact-btn-default">이메일 보내기</a>
+        </div>
+        <div class="contact-card">
+          <div class="contact-icon">📞</div>
+          <h3 class="contact-title">전화</h3>
+          <p class="contact-info">010-7559-9684<br>평일 09:00 - 18:00</p>
+          <a href="tel:010-7559-9684" class="contact-btn contact-btn-default">전화 걸기</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about-section">
+    <div class="about-inner">
+      <div class="about-logo">BIDIT</div>
+      <p class="about-vision">비딧은 바쁜 소상공인 사장님들의 청소 고민을 해결하고,<br>누구나 틈새 시간을 활용해 수익을 창출할 수 있는<br><strong>새로운 청소 매칭 문화</strong>를 만들어갑니다.</p>
+      <div class="about-divider"></div>
+      <div class="about-info-grid">
+        <div class="about-info-item"><span class="about-info-label">회사명</span><span class="about-info-value">주식회사 비딧</span></div>
+        <div class="about-info-item"><span class="about-info-label">대표</span><span class="about-info-value">박범수</span></div>
+        <div class="about-info-item"><span class="about-info-label">사업자번호</span><span class="about-info-value">789-88-02962</span></div>
+        <div class="about-info-item"><span class="about-info-label">이메일</span><span class="about-info-value">pis3124@naver.com</span></div>
+        <div class="about-info-item"><span class="about-info-label">전화</span><span class="about-info-value">010-7559-9684</span></div>
+        <div class="about-info-item"><span class="about-info-label">서비스 지역</span><span class="about-info-value">천안·아산 (확대 예정)</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="cta-inner">
+      <h2>더 궁금한 점이 있으신가요?</h2>
+      <p>카카오톡으로 편하게 문의하시거나, 지금 바로 사전 신청하세요!</p>
+      <div class="cta-buttons">
+        <a href="https://pf.kakao.com/_xxxxx" class="btn btn-white" target="_blank">카카오톡 문의하기</a>
+        <a href="https://pf.kakao.com/_xxxxx" class="btn btn-outline" target="_blank">사전 신청하기</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="logo">BIDIT</div>
+          <p class="footer-desc">바쁜 사장님을 위한 스마트한 B2B 청소 매칭 플랫폼</p>
+        </div>
+        <div class="footer-links">
+          <div class="footer-col">
+            <h4>서비스</h4>
+            <a href="service.html">서비스 안내</a>
+            <a href="faq.html">자주 묻는 질문</a>
+            <a href="faq.html#contact">문의하기</a>
+          </div>
+          <div class="footer-col">
+            <h4>문의</h4>
+            <a href="mailto:pis3124@naver.com">pis3124@naver.com</a>
+            <a href="tel:010-7559-9684">010-7559-9684</a>
+            <a href="https://pf.kakao.com/_xxxxx" target="_blank">카카오톡 채널</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-info">
+        <p><strong>주식회사 비딧</strong></p>
+        <p>대표: 박범수 | 사업자등록번호: 789-88-02962</p>
+        <p>이메일: pis3124@naver.com | 전화: 010-7559-9684</p>
+      </div>
+      <div class="footer-bottom">© 2025 BIDIT. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script>
+    function toggleAccordion(header) {
+      const accordion = header.parentElement;
+      accordion.classList.toggle('active');
+    }
+  </script>
+</body>
+</html>
