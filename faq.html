@@ -65,16 +65,16 @@
     .contact-header { text-align: center; margin-bottom: 48px; }
     .section-title { font-size: 32px; font-weight: 900; color: var(--primary); margin-bottom: 16px; }
     .section-sub { font-size: 18px; color: var(--gray-500); }
-    .contact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-    .contact-card { background: var(--white); border-radius: 20px; padding: 44px 32px; text-align: center; box-shadow: 0 4px 16px rgba(14, 43, 58, 0.06); transition: all 0.3s ease; }
+    .contact-grid { display: flex; justify-content: center; gap: 24px; }
+    .contact-card { background: var(--white); border-radius: 20px; padding: 44px 32px; text-align: center; box-shadow: 0 4px 16px rgba(14, 43, 58, 0.06); transition: all 0.3s ease; width: 280px; }
     .contact-card:hover { transform: translateY(-6px); box-shadow: 0 12px 32px rgba(14, 43, 58, 0.12); }
     .contact-icon { width: 80px; height: 80px; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); border-radius: 24px; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; font-size: 36px; }
     .contact-card.kakao .contact-icon { background: #FEE500; }
     .contact-title { font-size: 20px; font-weight: 700; color: var(--primary); margin-bottom: 10px; }
     .contact-info { font-size: 15px; color: var(--gray-500); margin-bottom: 24px; line-height: 1.7; }
     .contact-btn { display: inline-block; padding: 14px 28px; border-radius: 8px; font-size: 15px; font-weight: 600; transition: all 0.3s ease; }
-    .contact-btn-default { background: var(--gray-100); color: var(--primary-light); }
-    .contact-btn-default:hover { background: #D8E8F0; }
+    .contact-btn-default { background: var(--primary); color: #FFFFFF; }
+    .contact-btn-default:hover { background: var(--primary-light); }
     .contact-btn-kakao { background: #FEE500; color: #3C1E1E; }
     .contact-btn-kakao:hover { background: #F5DC00; }
     
@@ -120,7 +120,7 @@
       .accordion-header { padding: 18px 20px; }
       .accordion-question { font-size: 15px; }
       .accordion-answer { padding: 0 20px 20px 20px; }
-      .contact-grid { grid-template-columns: 1fr; }
+      .contact-grid { flex-direction: column; align-items: center; }
       .about-info-grid { grid-template-columns: 1fr; padding: 28px; }
       .cta-buttons { flex-direction: column; align-items: center; }
       .btn { width: 100%; max-width: 280px; justify-content: center; }
